@@ -1,0 +1,1 @@
+Folder fo helper modules and Find*.cmake files. A set of some common helpers is at https://github.com/CLIUtils/cmake. 

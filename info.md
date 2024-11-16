@@ -1,0 +1,1 @@
+Folder structure for blank cmake project generated with Project Genner, as per guidelines on https://cliutils.gitlab.io/modern-cmake/chapters/basics/structure.html.

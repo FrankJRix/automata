@@ -1,0 +1,1 @@
+Headers go here. You should be able to copy the contents of the include directory to /usr/include or similar directly (except for configuration headers, which I go over in another chapter), and not have any extra files or cause any conflicts. That’s also why there is a directory for your project inside the include directory.

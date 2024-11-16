@@ -1,0 +1,1 @@
+External dependencies. Should contain git submodules almost exclusively.

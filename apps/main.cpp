@@ -8,6 +8,7 @@ int main(int argc, char* argv[]) {
 	int w{100};
 	int h{100};
 	int n{1000};
+	int r{1};
 	
 	if(argc > 1)
 	{
@@ -23,7 +24,6 @@ int main(int argc, char* argv[]) {
 				if (!(converth >> h)) h = 1;
 
 				i += 2;
-				std::cout << "cordcord\n";
 			}
 
 			else if(flag == "-e" || flag == "--epochs")
@@ -32,7 +32,14 @@ int main(int argc, char* argv[]) {
 				if (!(convertn >> n)) n = 1;
 
 				i++;
-				std::cout << "epoepo\n";
+			}
+
+			else if(flag == "-r" || flag == "--radius")
+			{
+				std::stringstream convertn{ argv[i + 1] };
+				if (!(convertn >> r)) r = 1;
+
+				i++;
 			}
 
 			else i++;
@@ -44,9 +51,10 @@ int main(int argc, char* argv[]) {
 	}
 	
 	std::cout << "size: " << w << " x " << h << "\n";
-	std::cout << "epochs: " << n << "\n\n";
+	std::cout << "epochs: " << n << "\n";
+	std::cout << "radius: " << r << "\n\n";
 
-	CellularAutomataBase ca = CellularAutomataBase(w, h);
+	CellularAutomataBase ca = CellularAutomataBase(w, h, r);
 	ca.run(n);
 	ca.savePNG();
 	ca.saveWeirdPNG();

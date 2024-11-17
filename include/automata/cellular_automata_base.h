@@ -3,12 +3,26 @@
 
 #include <automata/random_mt.h>
 #include <automata/grid.h>
-#include <array>
+#include <vector>
 #include <iostream>
 
 #define BIRTH_THRESH 5
 #define SAME_THRESH 4
 #define MAX_EPOCHS 100
+#define DEFAULT_RADIUS 1
+
+
+/*
+allora, per 
+	r=1 -> N=5, N-1=4
+	r=2 -> N=9, N-1=8
+	r=3 -> N=13, N-1=12
+	r=4 -> N=17, N-1=16
+	r=5 -> N=21, N-1=20
+
+quindi N = 4r + 1
+*/
+
 
 struct Point
 {
@@ -21,10 +35,11 @@ class CellularAutomataBase
 protected:
 	Grid m_grid;
 	Grid m_old_grid;
+	int m_radius;
 	
 public:
-	CellularAutomataBase(int width, int heigth);
-	std::array<Point, 8> getNeighbors(int x, int y);
+	CellularAutomataBase(int width, int heigth, int radius = DEFAULT_RADIUS);
+	std::vector<Point> getNeighbors(int x, int y);
 	void display();
 	void savePNG();
 	void saveWeirdPNG();

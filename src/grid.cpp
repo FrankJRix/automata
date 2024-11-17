@@ -2,6 +2,8 @@
 #include <automata/lodepng.h>
 #include <iostream>
 
+#define WEIRDNESS 1
+
 Grid::Grid(int width, int heigth)
 	: m_width{width}
 	, m_heigth{heigth}
@@ -82,9 +84,9 @@ void Grid::saveWeirdPNG()
 	{
 		for(int i{ 0 }; i < m_width; i++)
 		{
-			temp[3 * i + 3 * j * m_width + 0] = static_cast<unsigned char>(getValue(i+4, j) * 255);
-			temp[3 * i + 3 * j * m_width + 1] = static_cast<unsigned char>(getValue(i, j+4) * 255);
-			temp[3 * i + 3 * j * m_width + 2] = static_cast<unsigned char>(getValue(i-2, j-2) * 255);
+			temp[3 * i + 3 * j * m_width + 0] = static_cast<unsigned char>(getValue(i + WEIRDNESS*2, j) * 255);
+			temp[3 * i + 3 * j * m_width + 1] = static_cast<unsigned char>(getValue(i, j + WEIRDNESS*2) * 255);
+			temp[3 * i + 3 * j * m_width + 2] = static_cast<unsigned char>(getValue(i - WEIRDNESS, j - WEIRDNESS) * 255);
 		}
 	}
 	

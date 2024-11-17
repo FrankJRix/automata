@@ -10,7 +10,7 @@ protected:
 	std::vector<int> m_data{};
 public:
 	Grid(int width, int heigth);
-	//Grid(const Grid& old);
+
 	void display();
 	void savePNG();
 	void saveWeirdPNG();

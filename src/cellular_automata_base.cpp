@@ -2,30 +2,48 @@
 #include <automata/grid.h>
 #include <automata/random_mt.h>
 
-CellularAutomataBase::CellularAutomataBase(int width, int heigth)
+CellularAutomataBase::CellularAutomataBase(int width, int heigth, int radius)
 	: m_grid(width, heigth)
 	, m_old_grid(width, heigth)
+	, m_radius{ radius }
 {
 }
 
-std::array<Point, 8> CellularAutomataBase::getNeighbors(int x, int y)
+std::vector<Point> CellularAutomataBase::getNeighbors(int x, int y)
 {
-	int ny{ y-1 };
-	int sy{ y+1 };
-	int wx{ x-1 };
-	int ex{ x+1 }; 
+	std::vector<Point> list{};
 
-	Point N{ x, ny };
-	Point S{ x, sy };
-	Point W{ wx, y };
-	Point E{ ex, y };
+	for(int i{1}; i <= m_radius; i++)
+	{
+		int ny{ y - i };
+		int sy{ y + i };
+		int wx{ x - i };
+		int ex{ x + i }; 
 
-	Point NW{ wx, ny };
-	Point NE{ ex, ny };
-	Point SW{ wx, sy };
-	Point SE{ ex, sy };
+		Point N{ x, ny };
+		list.push_back(N);
 
-	std::array<Point, 8> list{N, S, W, E, NW, NE, SW, SE};
+		Point S{ x, sy };
+		list.push_back(S);
+
+		Point W{ wx, y };
+		list.push_back(W);
+
+		Point E{ ex, y };
+		list.push_back(E);
+
+		Point NW{ wx, ny };
+		list.push_back(NW);
+
+		Point NE{ ex, ny };
+		list.push_back(NE);
+
+		Point SW{ wx, sy };
+		list.push_back(SW);
+
+		Point SE{ ex, sy };
+		list.push_back(SE);
+	}
 
 	return list;
 }
@@ -78,8 +96,8 @@ int CellularAutomataBase::cellEvolution(int x, int y)
 	int num{ countNeighbors(Point{x, y}) };
 	int cell{};
 
-	if(num >= BIRTH_THRESH) cell = 1;
-	else if(num >= SAME_THRESH) cell = getValue(x, y);
+	if(num >= (4 * m_radius + 1) ) cell = 1;
+	else if(num >= (4 * m_radius) ) cell = getValue(x, y);
 
 	return cell;
 }
@@ -105,14 +123,11 @@ void CellularAutomataBase::doEpoch()
 
 void CellularAutomataBase::run(int epochs)
 {
-	int hasChanged{};
 	int end{};
 	populate();
 
 	for(int i{}; i < epochs; i++)
 	{
-		hasChanged = 0;
-
 		// display();
 		doEpoch();
 

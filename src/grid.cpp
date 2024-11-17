@@ -94,7 +94,7 @@ void Grid::saveWeirdPNG()
 	if(error) std::cout << "encoder error " << error << ": "<< lodepng_error_text(error) << std::endl;
 }
 
-bool operator==(const Grid &g1, const Grid &g2)
+bool operator==(const Grid& g1, const Grid& g2)
 {
 	return g1.m_data == g2.m_data;
 }

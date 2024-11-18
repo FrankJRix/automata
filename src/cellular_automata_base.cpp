@@ -2,23 +2,23 @@
 #include <automata/grid.h>
 #include <automata/random_mt.h>
 
-CellularAutomataBase::CellularAutomataBase(int width, int heigth, int radius)
+CellularAutomataBase::CellularAutomataBase(std::size_t width, std::size_t heigth, std::uint8_t radius)
 	: m_grid(width, heigth)
 	, m_old_grid(width, heigth)
 	, m_radius{ radius }
 {
 }
 
-std::vector<Point> CellularAutomataBase::getNeighbors(int x, int y)
+std::vector<Point> CellularAutomataBase::getNeighbors(std::size_t x, std::size_t y)
 {
 	std::vector<Point> list{};
 
-	for(int i{1}; i <= m_radius; i++)
+	for(std::size_t i{1}; i <= m_radius; i++)
 	{
-		int ny{ y - i };
-		int sy{ y + i };
-		int wx{ x - i };
-		int ex{ x + i }; 
+		std::size_t ny{ y - i };
+		std::size_t sy{ y + i };
+		std::size_t wx{ x - i };
+		std::size_t ex{ x + i }; 
 
 		Point N{ x, ny };
 		list.push_back(N);
@@ -63,9 +63,9 @@ void CellularAutomataBase::saveWeirdPNG()
 	getMap()->saveWeirdPNG();
 }
 
-int CellularAutomataBase::countNeighbors(Point P)
+std::uint8_t CellularAutomataBase::countNeighbors(Point P)
 {
-	int count{};
+	std::uint8_t count{};
 	
 	for(auto item: getNeighbors(P.x, P.y))
 	{
@@ -76,14 +76,14 @@ int CellularAutomataBase::countNeighbors(Point P)
 
 void CellularAutomataBase::populate()
 {
-	int w = getMap()->getWidth();
-	int h = getMap()->getHeigth();
+	std::size_t w = getMap()->getWidth();
+	std::size_t h = getMap()->getHeigth();
 
-	for(int j{}; j < h; j++)
+	for(std::size_t j{}; j < h; j++)
 	{
-		for(int i{}; i < w; i++)
+		for(std::size_t i{}; i < w; i++)
 		{
-			int val{ Random::get(0,1) };
+			std::uint8_t val{ static_cast<std::uint8_t>(Random::get(0,1)) };
 			setValue(i, j, val);
 		}
 	}
@@ -91,10 +91,10 @@ void CellularAutomataBase::populate()
 	m_old_grid = m_grid;
 }
 
-int CellularAutomataBase::cellEvolution(int x, int y)
+std::uint8_t CellularAutomataBase::cellEvolution(std::size_t x, std::size_t y)
 {
-	int num{ countNeighbors(Point{x, y}) };
-	int cell{};
+	std::uint8_t num{ countNeighbors(Point{x, y}) };
+	std::uint8_t cell{};
 
 	if(num >= (4 * m_radius + 1) ) cell = 1;
 	else if(num >= (4 * m_radius) ) cell = getValue(x, y);
@@ -104,15 +104,15 @@ int CellularAutomataBase::cellEvolution(int x, int y)
 
 void CellularAutomataBase::doEpoch()
 {
-	int w = getMap()->getWidth();
-	int h = getMap()->getHeigth();
-	Grid temp(w, h);
+	std::size_t w = getMap()->getWidth();
+	std::size_t h = getMap()->getHeigth();
+	Grid<std::uint8_t> temp(w, h);
 
-	for(int j{}; j < h; j++)
+	for(std::size_t j{}; j < h; j++)
 	{
-		for(int i{}; i < w; i++)
+		for(std::size_t i{}; i < w; i++)
 		{
-			int c{ cellEvolution(i, j) };
+			std::uint8_t c{ cellEvolution(i, j) };
 			temp.setValue(i, j, c);
 		}
 	}
@@ -121,12 +121,12 @@ void CellularAutomataBase::doEpoch()
 	m_grid = temp;
 }
 
-void CellularAutomataBase::run(int epochs)
+void CellularAutomataBase::run(std::uint8_t epochs)
 {
 	int end{};
 	populate();
 
-	for(int i{}; i < epochs; i++)
+	for(std::uint8_t i{}; i < epochs; i++)
 	{
 		// display();
 		doEpoch();
@@ -143,22 +143,22 @@ void CellularAutomataBase::run(int epochs)
 	// display();
 }
 
-Grid* CellularAutomataBase::getMap()
+Grid<std::uint8_t>* CellularAutomataBase::getMap()
 {
 	return &m_grid;
 }
 
-Grid* CellularAutomataBase::getOldMap()
+Grid<std::uint8_t>* CellularAutomataBase::getOldMap()
 {
 	return &m_old_grid;
 }
 
-int CellularAutomataBase::getValue(int x, int y)
+std::uint8_t CellularAutomataBase::getValue(std::size_t x, std::size_t y)
 {
 	return getMap()->getValue(x, y);
 }
 
-void CellularAutomataBase::setValue(int x, int y, int value)
+void CellularAutomataBase::setValue(std::size_t x, std::size_t y, std::uint8_t value)
 {
 	getMap()->setValue(x, y, value);
 }

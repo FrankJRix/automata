@@ -26,35 +26,35 @@ quindi N = 4r + 1
 
 struct Point
 {
-	int x;
-	int y;
+	std::size_t x;
+	std::size_t y;
 };
 
 class CellularAutomataBase
 {
 protected:
-	Grid m_grid;
-	Grid m_old_grid;
-	int m_radius;
+	Grid<std::uint8_t> m_grid;
+	Grid<std::uint8_t> m_old_grid;
+	std::uint8_t m_radius;
 	
 public:
-	CellularAutomataBase(int width, int heigth, int radius = DEFAULT_RADIUS);
-	std::vector<Point> getNeighbors(int x, int y);
+	CellularAutomataBase(std::size_t width, std::size_t heigth, std::uint8_t radius = DEFAULT_RADIUS);
+	std::vector<Point> getNeighbors(std::size_t x, std::size_t y);
 	void display();
 	void savePNG();
 	void saveWeirdPNG();
 
-	int countNeighbors(Point P);
+	std::uint8_t countNeighbors(Point P);
 	void populate();
-	int cellEvolution(int x, int y);
+	std::uint8_t cellEvolution(std::size_t x, std::size_t y);
 	void doEpoch();
-	void run(int epochs = MAX_EPOCHS);
+	void run(std::uint8_t epochs = MAX_EPOCHS);
 
 	// setters and getters
-	Grid* getMap();
-	Grid *getOldMap();
-	int getValue(int x, int y);
-	void setValue(int x, int y, int value);
+	Grid<std::uint8_t>* getMap();
+	Grid<std::uint8_t>* getOldMap();
+	std::uint8_t getValue(std::size_t x, std::size_t y);
+	void setValue(std::size_t x, std::size_t y, std::uint8_t value);
 	
 };
 

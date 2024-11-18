@@ -1,18 +1,19 @@
-/*
 #include <automata/grid.h>
 #include <automata/lodepng.h>
 #include <iostream>
 
 #define WEIRDNESS 1
 
-Grid::Grid(size_t width, size_t heigth)
+template<typename T>
+Grid<T>::Grid(std::size_t width, std::size_t heigth)
 	: m_width{width}
 	, m_heigth{heigth}
 	, m_data(width * heigth)
 {
 }
 
-int Grid::getValue(size_t x, size_t y)
+template<typename T>
+T Grid<T>::getValue(std::size_t x, std::size_t y)
 {
 	x = ((x % m_width) + m_width) % m_width;
 	y = ((y % m_heigth) + m_heigth) % m_heigth;
@@ -20,24 +21,27 @@ int Grid::getValue(size_t x, size_t y)
 }
 
 template<typename T>
-void Grid::setValue(size_t x, size_t y, T value)
+void Grid<T>::setValue(std::size_t x, std::size_t y, T value)
 {
 	x = ((x % m_width) + m_width) % m_width;
 	y = ((y % m_heigth) + m_heigth) % m_heigth;
 	m_data[x + y * m_width] = value;
 }
 
-size_t Grid::getWidth()
+template<typename T>
+std::size_t Grid<T>::getWidth()
 {
 	return m_width;
 }
 
-size_t Grid::getHeigth()
+template<typename T>
+std::size_t Grid<T>::getHeigth()
 {
 	return m_heigth;
 }
 
-void Grid::display()
+template<typename T>
+void Grid<T>::display()
 {
 	for(int j{ 0 }; j < m_heigth; j++)
 	{
@@ -51,7 +55,8 @@ void Grid::display()
 	std::cout << std::endl;
 }
 
-void Grid::savePNG()
+template<typename T>
+void Grid<T>::savePNG()
 {
 	std::vector<unsigned char> temp;
 	temp.resize(m_width * m_heigth);
@@ -70,7 +75,8 @@ void Grid::savePNG()
 	if(error) std::cout << "encoder error " << error << ": "<< lodepng_error_text(error) << std::endl;
 }
 
-void Grid::saveWeirdPNG()
+template<typename T>
+void Grid<T>::saveWeirdPNG()
 {
 	std::vector<unsigned char> temp;
 	temp.resize(m_width * m_heigth * 3);
@@ -89,9 +95,4 @@ void Grid::saveWeirdPNG()
 	if(error) std::cout << "encoder error " << error << ": "<< lodepng_error_text(error) << std::endl;
 }
 
-template<typename U>
-bool operator==(const Grid<U>& g1, const Grid<U>& g2)
-{
-	return g1.m_data == g2.m_data;
-}
-*/
+template class Grid<std::uint8_t>;

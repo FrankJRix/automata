@@ -37,6 +37,12 @@ protected:
 	Grid<std::uint8_t> m_old_grid;
 	std::uint8_t m_radius;
 	
+	// helper methods
+	std::vector<Point> getNeighbors(std::size_t x, std::size_t y);
+	std::uint8_t countNeighbors(Point P);
+	std::uint8_t cellEvolutionMajority(std::size_t x, std::size_t y);
+	std::uint8_t cellEvolutionCaves(std::size_t x, std::size_t y);
+
 public:
 	CellularAutomataBase(std::size_t width, std::size_t heigth, std::uint8_t radius = DEFAULT_RADIUS);
 	//virtual ~CellularAutomataBase() = default;
@@ -46,10 +52,6 @@ public:
 	void saveWeirdPNG();
 
 	void populate();
-	std::vector<Point> getNeighbors(std::size_t x, std::size_t y);
-	std::uint8_t countNeighbors(Point P);
-	std::uint8_t cellEvolutionMajority(std::size_t x, std::size_t y);
-	std::uint8_t cellEvolutionCaves(std::size_t x, std::size_t y);
 	void doEpochMajority();
 	void doEpochCaves();
 	virtual void run(std::size_t epochs = MAX_EPOCHS);

@@ -5,7 +5,7 @@
 class HeigthmapAutomata : public CellularAutomataBase
 {
 private:
-	Grid<std::uint8_t> m_heigthmap;
+	Grid<std::uint32_t> m_heigthmap;
 	std::size_t m_end;
 
 public:

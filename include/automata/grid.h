@@ -18,9 +18,14 @@ public:
 	void savePNG(std::size_t normalization = NORMALIZAZION);
 	void saveWeirdPNG(std::size_t normalization = NORMALIZAZION);
 
+	template <typename U>
+	friend class Grid;
+
 	// operators
 	inline friend bool operator==(const Grid<T>& g1, const Grid<T>& g2) {return g1.m_data == g2.m_data;}
-	Grid<T>& operator+=(Grid<T>& rhs);
+	template <typename U>
+	Grid<T>& operator+=(const Grid<U>& rhs);
+	Grid<T>& operator/=(T rhs);
 
 	// setters and getters
 	T getValue(std::size_t x, std::size_t y);

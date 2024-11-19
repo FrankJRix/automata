@@ -96,18 +96,38 @@ void Grid<T>::saveWeirdPNG(std::size_t normalization)
 	if(error) std::cout << "encoder error " << error << ": "<< lodepng_error_text(error) << std::endl;
 }
 
-template <typename T>
-Grid<T> &Grid<T>::operator+=(Grid<T> &rhs)
+template<typename T>
+template<typename U>
+Grid<T> &Grid<T>::operator+=(const Grid<U> &rhs)
 {
 	std::transform( m_data.begin(),
 					m_data.end(),
 					rhs.m_data.begin(),
 					m_data.begin(),
-					[](T a, T b)
+					[](T a, U b)
 					{
-						return a+b;
+						return a + b;
+					});
+	return *this;
+}
+
+template <typename T>
+Grid<T> &Grid<T>::operator/=(T rhs)
+{
+	std::transform( m_data.begin(),
+					m_data.end(),
+					m_data.begin(),
+					[rhs](T a)
+					{
+						return a / rhs;
 					});
 	return *this;
 }
 
 template class Grid<std::uint8_t>;
+template class Grid<std::uint32_t>;
+
+template Grid<std::uint8_t>& Grid<std::uint8_t>::operator+=(const Grid<std::uint8_t>&);
+template Grid<std::uint32_t>& Grid<std::uint32_t>::operator+=(const Grid<std::uint32_t>&);
+template Grid<std::uint8_t>& Grid<std::uint8_t>::operator+=(const Grid<std::uint32_t>&);
+template Grid<std::uint32_t>& Grid<std::uint32_t>::operator+=(const Grid<std::uint8_t>&);

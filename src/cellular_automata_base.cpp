@@ -91,7 +91,17 @@ void CellularAutomataBase::populate()
 	m_old_grid = m_grid;
 }
 
-std::uint8_t CellularAutomataBase::cellEvolution(std::size_t x, std::size_t y)
+std::uint8_t CellularAutomataBase::cellEvolutionMajority(std::size_t x, std::size_t y)
+{
+	std::uint8_t num{ countNeighbors(Point{x, y}) };
+	std::uint8_t cell{};
+
+	if(num >= (4 * m_radius + 1) ) cell = 1;
+
+	return cell;
+}
+
+std::uint8_t CellularAutomataBase::cellEvolutionCaves(std::size_t x, std::size_t y)
 {
 	std::uint8_t num{ countNeighbors(Point{x, y}) };
 	std::uint8_t cell{};
@@ -102,7 +112,7 @@ std::uint8_t CellularAutomataBase::cellEvolution(std::size_t x, std::size_t y)
 	return cell;
 }
 
-void CellularAutomataBase::doEpoch()
+void CellularAutomataBase::doEpochMajority()
 {
 	std::size_t w = getMap()->getWidth();
 	std::size_t h = getMap()->getHeigth();
@@ -112,7 +122,7 @@ void CellularAutomataBase::doEpoch()
 	{
 		for(std::size_t i{}; i < w; i++)
 		{
-			std::uint8_t c{ cellEvolution(i, j) };
+			std::uint8_t c{ cellEvolutionMajority(i, j) };
 			temp.setValue(i, j, c);
 		}
 	}
@@ -121,15 +131,34 @@ void CellularAutomataBase::doEpoch()
 	m_grid = temp;
 }
 
-void CellularAutomataBase::run(std::uint8_t epochs)
+void CellularAutomataBase::doEpochCaves()
+{
+	std::size_t w = getMap()->getWidth();
+	std::size_t h = getMap()->getHeigth();
+	Grid<std::uint8_t> temp(w, h);
+
+	for(std::size_t j{}; j < h; j++)
+	{
+		for(std::size_t i{}; i < w; i++)
+		{
+			std::uint8_t c{ cellEvolutionCaves(i, j) };
+			temp.setValue(i, j, c);
+		}
+	}
+	
+	m_old_grid = m_grid;
+	m_grid = temp;
+}
+
+void CellularAutomataBase::run(std::size_t epochs)
 {
 	int end{};
 	populate();
 
-	for(std::uint8_t i{}; i < epochs; i++)
+	for(std::size_t i{}; i < epochs; i++)
 	{
 		// display();
-		doEpoch();
+		doEpochCaves();
 
 		end = i;
 

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <automata/cellular_automata_base.h>
+#include <automata/heigthmap_automata.h>
 
 int main(int argc, char* argv[]) {
     std::cout << "Hello World from Automata!" << std::endl;
@@ -54,10 +55,13 @@ int main(int argc, char* argv[]) {
 	std::cout << "epochs: " << n << "\n";
 	std::cout << "radius: " << r << "\n\n";
 
-	CellularAutomataBase ca = CellularAutomataBase(w, h, r);
+/* 	CellularAutomataBase ca = CellularAutomataBase(w, h, r);
 	ca.run(n);
 	ca.savePNG();
-	ca.saveWeirdPNG();
+	ca.saveWeirdPNG(); */
+
+	HeigthmapAutomata ha = HeigthmapAutomata(w, h, r);
+	ha.run(n);
 
     return 0;
 }

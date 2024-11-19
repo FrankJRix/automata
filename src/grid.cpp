@@ -1,6 +1,7 @@
 #include <automata/grid.h>
 #include <automata/lodepng.h>
 #include <iostream>
+#include <algorithm>
 
 #define WEIRDNESS 1
 
@@ -56,7 +57,7 @@ void Grid<T>::display()
 }
 
 template<typename T>
-void Grid<T>::savePNG()
+void Grid<T>::savePNG(std::size_t normalization)
 {
 	std::vector<unsigned char> temp;
 	temp.resize(m_width * m_heigth);
@@ -64,8 +65,8 @@ void Grid<T>::savePNG()
 	for(int j{ 0 }; j < m_heigth; j++)
 	{
 		for(int i{ 0 }; i < m_width; i++)
-		{
-			temp[i + j * m_width] = static_cast<unsigned char>(getValue(i, j) * 255);
+		{// IT WILL GIVE PROBLEMS: getValue returns T, which might not contain getValue * 255. Maybe it'll sort it out on its own, needs testing.
+			temp[i + j * m_width] = static_cast<unsigned char>(getValue(i, j) * 255 / normalization);
 			//temp[3 * i + 3 * j * m_width + 1] = static_cast<unsigned char>(getValue(i, j) * 255);
 			//temp[3 * i + 3 * j * m_width + 2] = static_cast<unsigned char>(getValue(i, j) * 255);
 		}
@@ -76,7 +77,7 @@ void Grid<T>::savePNG()
 }
 
 template<typename T>
-void Grid<T>::saveWeirdPNG()
+void Grid<T>::saveWeirdPNG(std::size_t normalization)
 {
 	std::vector<unsigned char> temp;
 	temp.resize(m_width * m_heigth * 3);
@@ -84,15 +85,29 @@ void Grid<T>::saveWeirdPNG()
 	for(int j{ 0 }; j < m_heigth; j++)
 	{
 		for(int i{ 0 }; i < m_width; i++)
-		{
-			temp[3 * i + 3 * j * m_width + 0] = static_cast<unsigned char>(getValue(i + WEIRDNESS*2, j) * 255);
-			temp[3 * i + 3 * j * m_width + 1] = static_cast<unsigned char>(getValue(i, j + WEIRDNESS*2) * 255);
-			temp[3 * i + 3 * j * m_width + 2] = static_cast<unsigned char>(getValue(i - WEIRDNESS, j - WEIRDNESS) * 255);
+		{// see above ^
+			temp[3 * i + 3 * j * m_width + 0] = static_cast<unsigned char>(getValue(i + WEIRDNESS*2, j) * 255 / normalization);
+			temp[3 * i + 3 * j * m_width + 1] = static_cast<unsigned char>(getValue(i, j + WEIRDNESS*2) * 255/ normalization);
+			temp[3 * i + 3 * j * m_width + 2] = static_cast<unsigned char>(getValue(i - WEIRDNESS, j - WEIRDNESS) * 255/ normalization);
 		}
 	}
 	
 	unsigned error = lodepng::encode("output/outW.png", temp, m_width, m_heigth, LCT_RGB);
 	if(error) std::cout << "encoder error " << error << ": "<< lodepng_error_text(error) << std::endl;
+}
+
+template <typename T>
+Grid<T> &Grid<T>::operator+=(Grid<T> &rhs)
+{
+	std::transform( m_data.begin(),
+					m_data.end(),
+					rhs.m_data.begin(),
+					m_data.begin(),
+					[](T a, T b)
+					{
+						return a+b;
+					});
+	return *this;
 }
 
 template class Grid<std::uint8_t>;

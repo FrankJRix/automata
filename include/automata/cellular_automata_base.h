@@ -39,16 +39,20 @@ protected:
 	
 public:
 	CellularAutomataBase(std::size_t width, std::size_t heigth, std::uint8_t radius = DEFAULT_RADIUS);
-	std::vector<Point> getNeighbors(std::size_t x, std::size_t y);
+	//virtual ~CellularAutomataBase() = default;
+
 	void display();
 	void savePNG();
 	void saveWeirdPNG();
 
-	std::uint8_t countNeighbors(Point P);
 	void populate();
-	std::uint8_t cellEvolution(std::size_t x, std::size_t y);
-	void doEpoch();
-	void run(std::uint8_t epochs = MAX_EPOCHS);
+	std::vector<Point> getNeighbors(std::size_t x, std::size_t y);
+	std::uint8_t countNeighbors(Point P);
+	std::uint8_t cellEvolutionMajority(std::size_t x, std::size_t y);
+	std::uint8_t cellEvolutionCaves(std::size_t x, std::size_t y);
+	void doEpochMajority();
+	void doEpochCaves();
+	virtual void run(std::size_t epochs = MAX_EPOCHS);
 
 	// setters and getters
 	Grid<std::uint8_t>* getMap();

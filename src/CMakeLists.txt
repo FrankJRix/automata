@@ -25,7 +25,7 @@ add_library(automata_lib ${SOURCES_LIST} ${HEADER_LIST})
 target_include_directories(automata_lib PUBLIC ../include)
 
 # All users of this library will need at least C++11
-target_compile_features(automata_lib PUBLIC cxx_std_11)
+target_compile_features(automata_lib PUBLIC cxx_std_17)
 
 # IDEs should put the headers in a nice place
 source_group(

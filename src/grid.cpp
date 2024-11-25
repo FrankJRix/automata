@@ -129,20 +129,49 @@ Grid<T> &Grid<T>::operator/=(T rhs)
 	return *this;
 }
 
+/* 
+======== Explicit template instances ========
+
+ - Types
+
+template class Grid<TIPO>;
+
+*/
+
 template class Grid<std::uint8_t>;
-template class Grid<std::uint32_t>;
 template class Grid<double>;
 
-// uint8
-template Grid<std::uint8_t>& Grid<std::uint8_t>::operator+=(const Grid<std::uint8_t>&);
-// uint32
-template Grid<std::uint32_t>& Grid<std::uint32_t>::operator+=(const Grid<std::uint32_t>&);
-// double
-template Grid<double>& Grid<double>::operator+=(const Grid<double>&);
+/*
+ - <T> Functions
 
-// 8 + 32
-template Grid<std::uint8_t>& Grid<std::uint8_t>::operator+=(const Grid<std::uint32_t>&);
-// 32 + 8
-template Grid<std::uint32_t>& Grid<std::uint32_t>::operator+=(const Grid<std::uint8_t>&);
-// double + 8
-template Grid<double>& Grid<double>::operator+=(const Grid<std::uint8_t>&);
+#define TIPO _____
+template Grid<TIPO>& Grid<TIPO>::operator+=(const Grid<TIPO>&);
+#undef TIPO
+
+*/
+
+#define TIPO std::uint8_t
+template Grid<TIPO>& Grid<TIPO>::operator+=(const Grid<TIPO>&);
+#undef TIPO
+
+#define TIPO double
+template Grid<TIPO>& Grid<TIPO>::operator+=(const Grid<TIPO>&);
+#undef TIPO
+
+/*
+ - <T, U> Functions
+
+#define TIPO_1 _____
+#define TIPO_2 _____
+template Grid<TIPO_1>& Grid<TIPO_1>::operator+=(const Grid<TIPO_2>&);
+template Grid<TIPO_2>& Grid<TIPO_2>::operator+=(const Grid<TIPO_1>&);
+#undef TIPO_1 _____
+#undef TIPO_2 _____
+*/
+
+#define TIPO_1 std::uint8_t
+#define TIPO_2 double
+template Grid<TIPO_1>& Grid<TIPO_1>::operator+=(const Grid<TIPO_2>&);
+template Grid<TIPO_2>& Grid<TIPO_2>::operator+=(const Grid<TIPO_1>&);
+#undef TIPO_1
+#undef TIPO_2

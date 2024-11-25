@@ -52,7 +52,7 @@ protected:
 	std::uint8_t cellEvolutionCaves(std::size_t x, std::size_t y);
 
 public:
-	CellularAutomataBase(std::size_t width, std::size_t heigth, std::uint8_t radius = DEFAULT_RADIUS);
+	CellularAutomataBase(std::size_t width, std::size_t height, std::uint8_t radius = DEFAULT_RADIUS);
 	//virtual ~CellularAutomataBase() = default;
 
 	void display();

@@ -2,9 +2,9 @@
 #include <automata/grid.h>
 #include <automata/random_mt.h>
 
-CellularAutomataBase::CellularAutomataBase(std::size_t width, std::size_t heigth, std::uint8_t radius)
-	: m_grid(width, heigth)
-	, m_old_grid(width, heigth)
+CellularAutomataBase::CellularAutomataBase(std::size_t width, std::size_t height, std::uint8_t radius)
+	: m_grid(width, height)
+	, m_old_grid(width, height)
 	, m_radius{ radius }
 {
 	populate();
@@ -78,7 +78,7 @@ std::uint8_t CellularAutomataBase::countNeighbors(Point P)
 void CellularAutomataBase::populate() // TODO: add varied distributions
 {
 	std::size_t w = getMap()->getWidth();
-	std::size_t h = getMap()->getHeigth();
+	std::size_t h = getMap()->getHeight();
 
 	for(std::size_t j{}; j < h; j++)
 	{
@@ -116,7 +116,7 @@ std::uint8_t CellularAutomataBase::cellEvolutionCaves(std::size_t x, std::size_t
 void CellularAutomataBase::doEpochMajority()
 {
 	std::size_t w = getMap()->getWidth();
-	std::size_t h = getMap()->getHeigth();
+	std::size_t h = getMap()->getHeight();
 	Grid<std::uint8_t> temp(w, h);
 
 	for(std::size_t j{}; j < h; j++)
@@ -135,7 +135,7 @@ void CellularAutomataBase::doEpochMajority()
 void CellularAutomataBase::doEpochCaves()
 {
 	std::size_t w = getMap()->getWidth();
-	std::size_t h = getMap()->getHeigth();
+	std::size_t h = getMap()->getHeight();
 	Grid<std::uint8_t> temp(w, h);
 
 	for(std::size_t j{}; j < h; j++)

@@ -7,10 +7,10 @@ class Grid
 {
 protected:
 	std::size_t m_width;
-	std::size_t m_heigth;
+	std::size_t m_height;
 	std::vector<T> m_data;
 public:
-	Grid(std::size_t width, std::size_t heigth);
+	Grid(std::size_t width, std::size_t height);
 
 	// all templated instances are friends with each other
 	template <typename U>
@@ -30,7 +30,7 @@ public:
 	T getValue(std::size_t x, std::size_t y);
 	void setValue(std::size_t x, std::size_t y, T value);
 	std::size_t getWidth();
-	std::size_t getHeigth();
+	std::size_t getHeight();
 };
 
 #endif

@@ -6,7 +6,7 @@
 set(HEADER_LIST 
 				"${Automata_SOURCE_DIR}/include/automata/grid.h"
 				"${Automata_SOURCE_DIR}/include/automata/cellular_automata_base.h"
-				"${Automata_SOURCE_DIR}/include/automata/heigthmap_automata.h"
+				"${Automata_SOURCE_DIR}/include/automata/heightmap_automata.h"
 				"${Automata_SOURCE_DIR}/include/automata/random_mt.h"
 				"${Automata_SOURCE_DIR}/include/automata/lodepng.h"
 				)
@@ -14,7 +14,7 @@ set(HEADER_LIST
 set(SOURCES_LIST
 				"grid.cpp"
 				"cellular_automata_base.cpp"
-				"heigthmap_automata.cpp"
+				"heightmap_automata.cpp"
 				"lodepng.cpp"
 				)
 

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <automata/cellular_automata_base.h>
-#include <automata/heigthmap_automata.h>
+#include <automata/heightmap_automata.h>
 
 int main(int argc, char* argv[]) {
     std::cout << "Hello World from Automata!" << std::endl;
@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
 	//ca.savePNG();
 	ca.saveWeirdPNG();
 
-	HeigthmapAutomata ha = HeigthmapAutomata(w, h, r);
+	HeightmapAutomata ha = HeightmapAutomata(w, h, r);
 	ha.run(n);
 
     return 0;

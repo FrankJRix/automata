@@ -23,6 +23,14 @@ allora, per
 quindi N = 4r + 1
 */
 
+enum class AutomataRuleset
+{
+	AR_Majority,
+	AR_Caves,
+	AR_Diamoeba,
+	AR_Coral,
+	AR_Custom
+};
 
 struct Point
 {

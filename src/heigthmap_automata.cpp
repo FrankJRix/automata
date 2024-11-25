@@ -14,7 +14,7 @@ void HeigthmapAutomata::run(std::size_t epochs)
 	for(std::size_t i{1}; i <= epochs; i++)
 	{
 		// display();
-		doEpochMajority();
+		doEpochCaves();
 		m_heigthmap += *getMap();
 
 		end = i;
@@ -25,7 +25,8 @@ void HeigthmapAutomata::run(std::size_t epochs)
 		};
 	}
 
-	m_heigthmap.savePNG(end);
+	m_heigthmap /= end;
+	m_heigthmap.savePNG();
 
 	std::cout << "\n\nFINAL RESULT at epoch " << end << "\n";
 }

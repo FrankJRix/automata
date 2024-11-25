@@ -2,8 +2,6 @@
 #define GRID_H
 #include <vector>
 
-#define NORMALIZAZION 1
-
 template <typename T>
 class Grid
 {
@@ -14,12 +12,13 @@ protected:
 public:
 	Grid(std::size_t width, std::size_t heigth);
 
-	void display();
-	void savePNG(std::size_t normalization = NORMALIZAZION);
-	void saveWeirdPNG(std::size_t normalization = NORMALIZAZION);
-
+	// all templated instances are friends with each other
 	template <typename U>
 	friend class Grid;
+
+	void display();
+	void savePNG();
+	void saveWeirdPNG();
 
 	// operators
 	inline friend bool operator==(const Grid<T>& g1, const Grid<T>& g2) {return g1.m_data == g2.m_data;}

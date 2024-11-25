@@ -7,6 +7,7 @@ CellularAutomataBase::CellularAutomataBase(std::size_t width, std::size_t heigth
 	, m_old_grid(width, heigth)
 	, m_radius{ radius }
 {
+	populate();
 }
 
 std::vector<Point> CellularAutomataBase::getNeighbors(std::size_t x, std::size_t y)
@@ -74,7 +75,7 @@ std::uint8_t CellularAutomataBase::countNeighbors(Point P)
 	return count;
 }
 
-void CellularAutomataBase::populate()
+void CellularAutomataBase::populate() // TODO: add varied distributions
 {
 	std::size_t w = getMap()->getWidth();
 	std::size_t h = getMap()->getHeigth();
@@ -153,7 +154,7 @@ void CellularAutomataBase::doEpochCaves()
 void CellularAutomataBase::run(std::size_t epochs)
 {
 	int end{};
-	populate();
+	//populate();
 
 	for(std::size_t i{}; i < epochs; i++)
 	{

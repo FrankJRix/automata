@@ -57,7 +57,7 @@ void Grid<T>::display()
 }
 
 template<typename T>
-void Grid<T>::savePNG(std::size_t normalization)
+void Grid<T>::savePNG()
 {
 	std::vector<unsigned char> temp;
 	temp.resize(m_width * m_heigth);
@@ -65,10 +65,9 @@ void Grid<T>::savePNG(std::size_t normalization)
 	for(int j{ 0 }; j < m_heigth; j++)
 	{
 		for(int i{ 0 }; i < m_width; i++)
-		{// IT WILL GIVE PROBLEMS: getValue returns T, which might not contain getValue * 255. Maybe it'll sort it out on its own, needs testing.
-			temp[i + j * m_width] = static_cast<unsigned char>(getValue(i, j) * 255 / normalization);
-			//temp[3 * i + 3 * j * m_width + 1] = static_cast<unsigned char>(getValue(i, j) * 255);
-			//temp[3 * i + 3 * j * m_width + 2] = static_cast<unsigned char>(getValue(i, j) * 255);
+		{
+			std::size_t coord{ i + j * m_width };
+			temp[coord] = static_cast<unsigned char>(getValue(i, j) * 255);
 		}
 	}
 	
@@ -77,7 +76,7 @@ void Grid<T>::savePNG(std::size_t normalization)
 }
 
 template<typename T>
-void Grid<T>::saveWeirdPNG(std::size_t normalization)
+void Grid<T>::saveWeirdPNG()
 {
 	std::vector<unsigned char> temp;
 	temp.resize(m_width * m_heigth * 3);
@@ -85,10 +84,16 @@ void Grid<T>::saveWeirdPNG(std::size_t normalization)
 	for(int j{ 0 }; j < m_heigth; j++)
 	{
 		for(int i{ 0 }; i < m_width; i++)
-		{// see above ^
-			temp[3 * i + 3 * j * m_width + 0] = static_cast<unsigned char>(getValue(i + WEIRDNESS*2, j) * 255 / normalization);
-			temp[3 * i + 3 * j * m_width + 1] = static_cast<unsigned char>(getValue(i, j + WEIRDNESS*2) * 255/ normalization);
-			temp[3 * i + 3 * j * m_width + 2] = static_cast<unsigned char>(getValue(i - WEIRDNESS, j - WEIRDNESS) * 255/ normalization);
+		{
+			std::size_t coord{ 3 * i + 3 * j * m_width };
+
+			T rgb_r{ getValue(i + WEIRDNESS * 2, j) * 255 };
+			T rgb_g{ getValue(i, j + WEIRDNESS * 2) * 255 };
+			T rgb_b{ getValue(i - WEIRDNESS, j - WEIRDNESS) * 255 };
+
+			temp[coord + 0] = static_cast<unsigned char>(rgb_r);
+			temp[coord + 1] = static_cast<unsigned char>(rgb_g);
+			temp[coord + 2] = static_cast<unsigned char>(rgb_b);
 		}
 	}
 	
@@ -126,8 +131,18 @@ Grid<T> &Grid<T>::operator/=(T rhs)
 
 template class Grid<std::uint8_t>;
 template class Grid<std::uint32_t>;
+template class Grid<double>;
 
+// uint8
 template Grid<std::uint8_t>& Grid<std::uint8_t>::operator+=(const Grid<std::uint8_t>&);
+// uint32
 template Grid<std::uint32_t>& Grid<std::uint32_t>::operator+=(const Grid<std::uint32_t>&);
+// double
+template Grid<double>& Grid<double>::operator+=(const Grid<double>&);
+
+// 8 + 32
 template Grid<std::uint8_t>& Grid<std::uint8_t>::operator+=(const Grid<std::uint32_t>&);
+// 32 + 8
 template Grid<std::uint32_t>& Grid<std::uint32_t>::operator+=(const Grid<std::uint8_t>&);
+// double + 8
+template Grid<double>& Grid<double>::operator+=(const Grid<std::uint8_t>&);

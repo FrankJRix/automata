@@ -10,11 +10,11 @@ CellularAutomataBase::CellularAutomataBase(std::size_t width, std::size_t height
 	populate();
 }
 
-std::vector<Point> CellularAutomataBase::getNeighbors(std::size_t x, std::size_t y)
+std::vector<Point> CellularAutomataBase::getNeighbors(std::size_t x, std::size_t y, std::uint8_t radius)
 {
 	std::vector<Point> list{};
 
-	for(std::size_t i{1}; i <= m_radius; i++)
+	for(std::size_t i{1}; i <= radius; i++)
 	{
 		std::size_t ny{ y - i };
 		std::size_t sy{ y + i };
@@ -68,7 +68,7 @@ std::uint8_t CellularAutomataBase::countNeighbors(Point P)
 {
 	std::uint8_t count{};
 	
-	for(auto item: getNeighbors(P.x, P.y))
+	for(auto item: getNeighbors(P.x, P.y, m_radius))
 	{
 		count += getValue(item.x, item.y);
 	}

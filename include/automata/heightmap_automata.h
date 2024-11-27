@@ -11,7 +11,8 @@ private:
 public:
 	HeightmapAutomata(std::size_t width, std::size_t height, std::uint8_t radius = DEFAULT_RADIUS);
 	void run(std::size_t epochs = MAX_EPOCHS) override;
-	//void smoothHeight();
+	void averageHeight(Point P, std::uint8_t r);
+	void smoothenMap(std::uint8_t r);
 
 };
 

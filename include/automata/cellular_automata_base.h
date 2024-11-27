@@ -46,7 +46,7 @@ protected:
 	std::uint8_t m_radius;
 	
 	// helper methods
-	std::vector<Point> getNeighbors(std::size_t x, std::size_t y);
+	std::vector<Point> getNeighbors(std::size_t x, std::size_t y, std::uint8_t radius);
 	std::uint8_t countNeighbors(Point P);
 	std::uint8_t cellEvolutionMajority(std::size_t x, std::size_t y);
 	std::uint8_t cellEvolutionCaves(std::size_t x, std::size_t y);

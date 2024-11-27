@@ -30,3 +30,33 @@ void HeightmapAutomata::run(std::size_t epochs)
 
 	std::cout << "\n\nFINAL RESULT at epoch " << end << "\n";
 }
+
+void HeightmapAutomata::averageHeight(Point P, std::uint8_t r)
+{
+	double sum{};
+	int count{};
+	
+	for(auto item: getNeighbors(P.x, P.y, r))
+	{
+		sum += m_heightmap.getValue(item.x, item.y);
+		count++;
+	}
+
+	m_heightmap.setValue(P.x, P.y, sum / count);
+}
+
+void HeightmapAutomata::smoothenMap(std::uint8_t r)
+{
+	std::size_t w = getMap()->getWidth();
+	std::size_t h = getMap()->getHeight();
+
+	for(std::size_t j{}; j < h; j++)
+	{
+		for(std::size_t i{}; i < w; i++)
+		{
+			averageHeight(Point{i, j}, r);
+		}
+	}
+
+	m_heightmap.savePNG();
+}

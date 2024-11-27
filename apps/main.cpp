@@ -55,13 +55,14 @@ int main(int argc, char* argv[]) {
 	std::cout << "epochs: " << n << "\n";
 	std::cout << "radius: " << r << "\n\n";
 
-	CellularAutomataBase ca = CellularAutomataBase(w, h, r);
+/* 	CellularAutomataBase ca = CellularAutomataBase(w, h, r);
 	ca.run(n);
-	//ca.savePNG();
-	ca.saveWeirdPNG();
+	ca.savePNG();
+	ca.saveWeirdPNG(); */
 
 	HeightmapAutomata ha = HeightmapAutomata(w, h, r);
 	ha.run(n);
+	ha.smoothenMap(r/3 + 1);
 
     return 0;
 }

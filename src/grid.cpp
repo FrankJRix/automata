@@ -165,8 +165,8 @@ template Grid<TIPO>& Grid<TIPO>::operator+=(const Grid<TIPO>&);
 #define TIPO_2 _____
 template Grid<TIPO_1>& Grid<TIPO_1>::operator+=(const Grid<TIPO_2>&);
 template Grid<TIPO_2>& Grid<TIPO_2>::operator+=(const Grid<TIPO_1>&);
-#undef TIPO_1 _____
-#undef TIPO_2 _____
+#undef TIPO_1
+#undef TIPO_2
 */
 
 #define TIPO_1 std::uint8_t

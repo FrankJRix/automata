@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
 
 	HeightmapAutomata ha = HeightmapAutomata(w, h, r);
 	ha.run(n);
-	ha.smoothenMap(r/3 + 1);
+	ha.smoothenMap(r/3 + 1); //
 
     return 0;
 }
